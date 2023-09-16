@@ -130,9 +130,9 @@ class HBNBCommand(cmd.Cmd):
         for i in args[1:]:
             key, value = i.split('=')
             try:
-                kwargs[key] = eval(value.replace('_', ' ').strip('"'))
+                kwargs[key] = eval(value.replace('_', ' ').strip('"\''))
             except Exception:
-                kwargs[key] = value.replace('_', ' ').strip('"')
+                kwargs[key] = value.replace('_', ' ').strip('"\'')
         line = f"{args[0]} {new_instance.id} {kwargs}"
         self.do_update(line)
 
