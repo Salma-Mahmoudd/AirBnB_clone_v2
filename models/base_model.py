@@ -6,8 +6,9 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import models
 
-
 Base = declarative_base()
+
+
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), primary_key=True, nullable=False)
@@ -16,27 +17,15 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """initiallization of BaseModel"""
+        self.id = str(uuid.uuid4())
+        self.created_at = self.updated_at = datetime.utcnow()
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
                     continue
                 if key == "created_at" or key == "updated_at":
-                    if key == "created_at":
-                        self.created_at = datetime.strptime(
-                            value, "%Y-%m-%dT%H:%M:%S.%f"
-                        )
-                    else:
-                        self.updated_at = datetime.strptime(
-                            value, "%Y-%m-%dT%H:%M:%S.%f"
-                        )
-                else:
-                    setattr(self, key, value)
-
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
-            storage.new(self)
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -45,7 +34,6 @@ class BaseModel:
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
-        from models import storage
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
@@ -64,7 +52,4 @@ class BaseModel:
 
     def delete(self, obj=None):
         """to delete the current instance from the storage (models.storage)"""
-        k = "{}.{}".format(type(self).__name__, self.id)
-        del models.storage.__objects[k]
-
-
+        models.storage.delete(self)
