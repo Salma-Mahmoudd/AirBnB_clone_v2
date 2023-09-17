@@ -128,7 +128,10 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
         storage.save()
         for i in args[1:]:
-            key, value = i.split('=')
+            if '=' in i:
+                key, value = i.split('=')
+            else:
+                continue
             try:
                 kwargs[key] = eval(value.replace('_', ' ').strip('"'))
             except Exception:
