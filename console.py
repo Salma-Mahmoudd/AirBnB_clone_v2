@@ -136,7 +136,6 @@ class HBNBCommand(cmd.Cmd):
                     kwargs[key] = eval(value)
             except:
                 continue
-        print(kwargs)
         line = f"{args[0]} {new_instance.id} {kwargs}"
         self.do_update(line)
 
