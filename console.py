@@ -128,14 +128,14 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
         storage.save()
         for i in args[1:]:
-            if '=' in i:
-                key, value = i.split('=')
-            else:
-                continue
             try:
+                key, value = i.split('=')
                 kwargs[key] = eval(value.replace('_', ' ').strip('"'))
-            except Exception:
+            except SyntaxError:
+                key, value = i.split('=')
                 kwargs[key] = value.replace('_', ' ').strip('"')
+            except Exception:
+                continue
         line = f"{args[0]} {new_instance.id} {kwargs}"
         self.do_update(line)
 
