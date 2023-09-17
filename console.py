@@ -138,6 +138,7 @@ class HBNBCommand(cmd.Cmd):
                 continue
         line = f"{args[0]} {new_instance.id} {kwargs}"
         self.do_update(line)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
