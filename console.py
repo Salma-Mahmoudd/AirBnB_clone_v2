@@ -131,10 +131,9 @@ class HBNBCommand(cmd.Cmd):
             try:
                 key, value = i.split('=')
                 kwargs[key] = eval(value.replace('_', ' ').strip('"'))
-            except SyntaxError:
-                key, value = i.split('=')
+            except (SyntaxError, NameError):
                 kwargs[key] = value.replace('_', ' ').strip('"')
-            except Exception:
+            except:
                 continue
         line = f"{args[0]} {new_instance.id} {kwargs}"
         self.do_update(line)
