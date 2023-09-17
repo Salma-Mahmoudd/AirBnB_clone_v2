@@ -124,9 +124,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[args[0]]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
         for i in args[1:]:
             try:
                 key, value = i.split('=')
@@ -134,11 +131,11 @@ class HBNBCommand(cmd.Cmd):
                     kwargs[key] = value.replace('_', ' ').strip('"')
                 elif key:
                     kwargs[key] = eval(value)
-            except:
+            except (SyntaxError, NameError):
                 continue
         line = f"{args[0]} {new_instance.id} {kwargs}"
         self.do_update(line)
-        storage.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
