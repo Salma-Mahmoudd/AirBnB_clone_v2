@@ -130,9 +130,9 @@ class HBNBCommand(cmd.Cmd):
         for i in args[1:]:
             try:
                 key, value = i.split('=')
-                if value[0] == '"':
+                if value[0] == '"' and key:
                     kwargs[key] = value.replace('_', ' ').strip('"')
-                else:
+                elif key:
                     kwargs[key] = eval(value)
             except:
                 continue
