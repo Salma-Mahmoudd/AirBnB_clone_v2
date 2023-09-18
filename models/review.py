@@ -15,7 +15,6 @@ class Review(BaseModel, Base):
     """
         Review class to store review infor
     """
-    __tablename__ = "reviews"
     if (storage_engine == 'db'):
         __tablename__ = "reviews"
         place_id = Column(String(60), ForeignKey("places.id"))
