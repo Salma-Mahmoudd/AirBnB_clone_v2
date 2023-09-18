@@ -4,9 +4,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 import models
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
-from os import environ
-
-storage_engine = environ.get("HBNB_TYPE_STORAGE")
+import os
+from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -25,7 +24,9 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         amenity_ids = []
-        reviews = relationship("Review", back_populates="place")
+        if os.environ.get("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship(
+            "Review", cascade="all, delete, delete-orphan", backref="place")
 
     else:
         city_id = ""
