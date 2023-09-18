@@ -6,12 +6,12 @@ import models
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from os import environ
 
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
 
-    storage_engine = environ.get("HBNB_TYPE_STORAGE")
     if storage_engine == "db":
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
