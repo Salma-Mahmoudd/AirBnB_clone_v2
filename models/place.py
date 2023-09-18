@@ -5,8 +5,10 @@ from sqlalchemy.orm import relationship
 import models
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from os import environ
+from models import storage
 
 storage_engine = environ.get("HBNB_TYPE_STORAGE")
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -41,7 +43,6 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self)
-            from models import storage
             review_list = []
             for review in storage.all(Review).values():
                 if review.place_id == self.id:
