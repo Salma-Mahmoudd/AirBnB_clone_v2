@@ -40,11 +40,10 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
         @property
-        def reviews(self):
-            """returns the list of Review instances"""
-            res = []
-            tmp = models.dummy_classes['Review']
-            for r in models.storage.all(tmp).values():
-                if r.place_id == self.id:
-                    res.append(r)
-            return res
+        def reviews(self)
+            from models import storage
+            review_list = []
+            for review in storage.all(Review).values():
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review_list
