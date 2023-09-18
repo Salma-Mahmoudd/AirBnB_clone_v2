@@ -43,7 +43,7 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self)
-            review_list = []
+        review_list = []
             for review in storage.all(Review).values():
                 if review.place_id == self.id:
                     review_list.append(review)
