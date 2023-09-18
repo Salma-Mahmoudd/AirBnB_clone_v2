@@ -5,6 +5,8 @@ from sqlalchemy import ForeignKey, String, Column
 from sqlalchemy.orm import relationship
 from os import environ
 
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
+
 
 class User(BaseModel, Base):
     """class for users"""
