@@ -129,9 +129,10 @@ class HBNBCommand(cmd.Cmd):
                 key, value = i.split('=')
                 if value[0] == '"' and key:
                     kwargs[key] = value.replace('_', ' ').strip('"')
+                    setattr(new_instance, key, kwargs[key])
                 elif key:
                     kwargs[key] = eval(value)
-                setattr(new_instance, key, kwargs[key])
+                    setattr(new_instance, key, kwargs[key])
             except (SyntaxError, NameError):
                 continue
         storage.new(new_instance)
