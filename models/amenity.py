@@ -9,4 +9,3 @@ class Amenity(BaseModel, Base):
     """Amenity for AirBnB"""
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary="place_amenity")
