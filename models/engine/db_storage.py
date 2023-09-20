@@ -48,7 +48,7 @@ class DBStorage:
         """query on the current database session"""
         classes = {'State': State, 'City': City,
                    'User': User, 'Place': Place,
-                   'Review': Review}
+                   'Review': Review, 'Amenity': Amenity}
         que = []
         if cls:
             que = self.__session().query(classes[cls]).all()
