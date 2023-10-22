@@ -18,7 +18,7 @@ class State(BaseModel, Base):
         def cities(self):
             """getter attribute that returns the list of City instances"""
             city_objs = []
-            for obj in self.all(City):
+            for obj in self.all(City).values():
                 if obj.state_id == self.id:
                     city_objs.append(obj)
             return city_objs
