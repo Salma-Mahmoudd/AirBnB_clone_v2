@@ -45,19 +45,19 @@ class DBStorage:
             self._session.delete(obj)
 
     def all(self, cls=None):
-        """query on the current database session"""
-        classes = {'State': State, 'City': City,
-                   'User': User, 'Place': Place,
-                   'Review': Review, 'Amenity': Amenity}
-        que = []
+        """query objects"""
+        classes = [State, City, User, Place, Review, Amenity]
+        data = []
+        tables = {}
         if cls:
-            if cls in classes:
-                que = self.__session.query(classes[cls]).all()
+            data = self.__session.query(cls).all()
         else:
-            for class_obj in classes.values():
-                que += self.__session.query(class_obj).all()
-        objects = {f"{obj.__class__.__name__}.{obj.id}": obj for obj in que}
-        return objects
+            for i in classes:
+                data = data + self.__session.query(i).all()
+        for i in data:
+            key = f"{i.__class__.__name__}.{i.id}"
+            tables[key] = i
+        return tables
 
     def reload(self):
         """create session"""
