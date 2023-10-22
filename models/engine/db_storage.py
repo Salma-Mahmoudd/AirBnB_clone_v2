@@ -51,10 +51,11 @@ class DBStorage:
                    'Review': Review, 'Amenity': Amenity}
         que = []
         if cls:
-            que = self.__session().query(classes[cls]).all()
+            if cls in classes:
+                que = self.__session.query(classes[cls]).all()
         else:
-            for cls in classes.values():
-                que += self.__session.query(cls).all()
+            for class_obj in classes.values():
+                que += self.__session.query(class_obj).all()
         objects = {f"{obj.__class__.__name__}.{obj.id}": obj for obj in que}
         return objects
 
@@ -64,3 +65,7 @@ class DBStorage:
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(Session)
         self.__session = Session()
+
+    def close(self):
+        """call remove()"""
+        self.__session.close()
