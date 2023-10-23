@@ -15,7 +15,8 @@ def teardown(esc):
 
 @app.route("/cities_by_states", strict_slashes=False)
 def cities():
-    return render_template("8-cities_by_states.html", states=storage.all(State))
+    states = storage.all(State)
+    return render_template("8-cities_by_states.html", states=states)
 
 
 if __name__ == '__main__':
